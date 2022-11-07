@@ -20,9 +20,24 @@ public class GameInterface {
         this.ui = ui;
     }
 
-    public void setShips(){
+
+    public void setShips() {
+        emptygrid(battleships.getCurrentGameState().getPlayer(0).getGameGrid());
+        emptygrid(battleships.getCurrentGameState().getPlayer(1).getGameGrid());
         ui.println("Battleships game.");
         ui.println("Number of players is set to " + DEFAULT_NUMBER_OF_PLAYERS);
-        ui.println("Player number " + );
+        ui.println("Player number " + battleships.getCurrentGameState().);
+    }
+
+    private char[][] emptygrid(char[][] gameGrid) {
+
+        for (char[] line : gameGrid) {
+            for (char square : line) {
+                square = '░';
+
+            }
+        }
+        return gameGrid;
     }
 }
+
