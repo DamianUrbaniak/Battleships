@@ -21,4 +21,8 @@ public class UserInterface {
     public void println(String message){
         output.println(message);
     }
+
+    public String nextLine(){
+        return scanner.nextLine();
+    }
 }

@@ -14,8 +14,6 @@ public class Battleships {
         Player player1 = new Player(new char[DEFAULT_GRID_SIZE][DEFAULT_GRID_SIZE],
                 new char[DEFAULT_GRID_SIZE][DEFAULT_GRID_SIZE]);
 
-        player1.setCurrentPlayer(true);
-
         Player player2 = new Player(new char[DEFAULT_GRID_SIZE][DEFAULT_GRID_SIZE],
                 new char[DEFAULT_GRID_SIZE][DEFAULT_GRID_SIZE]);
         gameState = new GameState(player1, player2);
@@ -26,18 +24,27 @@ public class Battleships {
     }
 
     public static class GameState {
-        Player player;
+        private Player player;
 
-        Player player2;
+        private Player player2;
+
+        private int currentPlayer;
 
         List<Player> players = new ArrayList<>();
 
         public GameState(Player player, Player player2) {
-            player.setCurrentPlayer(true);
+            setCurrentPlayer(1);
             players.add(player);
             players.add(player2);
         }
 
+        public int getCurrentPlayer() {
+            return currentPlayer;
+        }
+
+        public void setCurrentPlayer(int currentPlayer) {
+            this.currentPlayer = currentPlayer;
+        }
 
         public Player getPlayer(int index) {
             return players.get(index);
@@ -47,8 +54,6 @@ public class Battleships {
 
     public static class Player {
 
-        private int currentPlayer;
-
         private final char gameGrid[][];
 
         private final char givenShots[][];
@@ -57,10 +62,6 @@ public class Battleships {
         public Player(char[][] gameGrid, char[][] givenShots) {
             this.gameGrid = gameGrid;
             this.givenShots = givenShots;
-        }
-
-        public void setCurrentPlayer(int player) {
-            currentPlayer = player;
         }
 
         public char[][] getGameGrid() {

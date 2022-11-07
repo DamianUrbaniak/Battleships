@@ -10,23 +10,34 @@ public class GameInterface {
 
     private final UserInterface ui;
 
-    private final CoordinationParser;
+    private final CoordinationParser coordinationParser;
 
     public GameInterface(Battleships battleships,
                          RulesChecker rulesChecker,
-                         UserInterface ui) {
+                         UserInterface ui,
+                         CoordinationParser coordinationParser) {
         this.battleships = battleships;
         this.rulesChecker = rulesChecker;
         this.ui = ui;
+        this.coordinationParser = coordinationParser;
     }
 
 
-    public void setShips() {
+    public void startGame() {
         emptygrid(battleships.getCurrentGameState().getPlayer(0).getGameGrid());
         emptygrid(battleships.getCurrentGameState().getPlayer(1).getGameGrid());
         ui.println("Battleships game.");
         ui.println("Number of players is set to " + DEFAULT_NUMBER_OF_PLAYERS);
-        ui.println("Player number " + battleships.getCurrentGameState().);
+        ui.println("Player number " + battleships.getCurrentGameState().getCurrentPlayer());
+        ui.println("Please set your ships on the grid.");
+        for (int i = 0; i < 30; i++) {
+            ui.println("Enter coordinates, you have " + (30 - i) + "places left.");
+            setShips(battleships.getCurrentGameState().getPlayer(0).getGameGrid(),
+                    readPlayerMovementUntilNoException().getX(),
+                    readPlayerMovementUntilNoException().getY()
+                    );
+        }
+
     }
 
     private char[][] emptygrid(char[][] gameGrid) {
@@ -34,10 +45,28 @@ public class GameInterface {
         for (char[] line : gameGrid) {
             for (char square : line) {
                 square = '░';
-
             }
         }
         return gameGrid;
     }
+
+    private char[][] setShips(char[][] gameGrid, int x, int y){
+        gameGrid[x][y] = '█';
+
+        return gameGrid;
+    }
+
+    private PlayerMovement readPlayerMovementUntilNoException() {
+        while(true){
+            try{
+                return coordinationParser.parse(ui.nextLine());
+            }
+            catch (IllegalArgumentException e){
+                ui.print(e.getMessage() + "enter coordinates again.");
+            }
+        }
+
+    }
+
 }
 
