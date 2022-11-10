@@ -58,13 +58,13 @@ public class Battleships {
 
 
         public boolean hasWinner(Battleships battleships) {
-            int shipsleft = 0;
             for (int i = 0; i < 2; i++) {
+                int shipsleft = 5;
                 char[][] grid = battleships.getCurrentGameState().getPlayer(i).getGameGrid();
                 for (int j = 0; j < grid.length; j++) {
                     for (int k = 0; k < grid.length; k++) {
                         if (grid[i][j] == '█') {
-                            shipsleft++;
+                            shipsleft--;
                         }
                     }
                 }

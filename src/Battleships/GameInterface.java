@@ -25,7 +25,7 @@ public class GameInterface {
     }
 
 
-    public void startGame() {
+    public void startGame() throws InterruptedException {
         emptygrid(battleships.getCurrentGameState().getPlayer(0).getGameGrid());
         emptygrid(battleships.getCurrentGameState().getPlayer(1).getGameGrid());
 
@@ -44,14 +44,15 @@ public class GameInterface {
 
         int roundsCounter = 0;
 
-        while(!battleships.getCurrentGameState().hasWinner(battleships)){
+        while (!battleships.getCurrentGameState().hasWinner(battleships)) {
             ui.println("Player's number " + battleships.getCurrentGameState().getCurrentPlayer() + " turn.");
             ui.println("Enter the coordinates to take a shot: ");
             PlayerMovement playerMovement = readPlayerMovementUntilNoException();
-            while(isIllegal(playerMovement)){
+            while (isIllegalShoot(playerMovement)) {
                 playerMovement = readPlayerMovementUntilNoException();
             }
             shoot(playerMovement, battleships.getCurrentGameState().getCurrentPlayer());
+            optionAfterEachMove();
             playersSwitcher(battleships.getCurrentGameState().getCurrentPlayer());
         }
     }
@@ -104,15 +105,15 @@ public class GameInterface {
         }
     }
 
-    private void shoot(PlayerMovement playerMovement, int player){
+    private void shoot(PlayerMovement playerMovement, int player) {
         int attacker = 0;
         int defender = 0;
-        if(player == 1){
-            attacker = 1;
-            defender = 0;
-        } else {
+        if (player == 1) {
             attacker = 0;
             defender = 1;
+        } else {
+            attacker = 1;
+            defender = 0;
         }
 
         char[][] gridUnderTheFire = battleships.getCurrentGameState().getPlayer(defender).getGameGrid();
@@ -120,12 +121,11 @@ public class GameInterface {
         int x = playerMovement.getX();
         int y = playerMovement.getY();
 
-        if(gridUnderTheFire[y][x] == '█'){
+        if (gridUnderTheFire[y][x] == '█') {
             attackerMarkingGrid[y][x] = 'X';
             gridUnderTheFire[y][x] = 'X';
             ui.println("BOOOM!!! You have hit the target! ");
-        }
-        if(gridUnderTheFire[y][x] == '░') {
+        } else if (gridUnderTheFire[y][x] == '░') {
             attackerMarkingGrid[y][x] = '-';
             ui.println("You have missed.");
         }
@@ -135,7 +135,7 @@ public class GameInterface {
     private void printGrid(char[][] gridToPrint) {
         char[][] grid = gridToPrint;
         for (int i = 0; i < grid.length; i++) {
-            if(i  == 5){
+            if (i == 5) {
                 ui.print(i + " ");
                 continue;
             }
@@ -166,12 +166,54 @@ public class GameInterface {
         return false;
     }
 
-    private void playersSwitcher(int player){
-        if(player == 1){
+
+    private boolean isIllegalShoot(PlayerMovement playerMovement) {
+//        start here, implement code that will switch players grids between each other
+        int currentPlaya = battleships.getCurrentGameState().getCurrentPlayer();
+        try {
+            rulesChecker.isValidShoot(battleships, playerMovement, currentPlaya);
+
+        } catch (IllegalArgumentException e) {
+            ui.print(e.getMessage() + ", type in your move again. \n");
+            return true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            ui.print(e.getMessage() + ", type in your move again. \n");
+            return true;
+        }
+        return false;
+    }
+
+    private void playersSwitcher(int player) {
+        if (player == 1) {
             battleships.getCurrentGameState().setCurrentPlayer(2);
         }
-        if(player == 2){
+        if (player == 2) {
             battleships.getCurrentGameState().setCurrentPlayer(1);
+        }
+    }
+
+    private void optionAfterEachMove() throws InterruptedException {
+        ui.println("What would you like to do next?");
+        ui.println("Display my ships. Press 1.");
+        ui.println("Display my given shoots so far. Press 2.");
+        ui.println("End my turn. Press 3.");
+        String choice = ui.nextLine();
+        if (choice.matches("1")) {
+            int currentPlayer = battleships.getCurrentGameState().getCurrentPlayer();
+            printGrid(battleships.getCurrentGameState().getPlayer(currentPlayer - 1).getGameGrid());
+            optionAfterEachMove();
+        }
+        if (choice.matches("2")) {
+            int currentPlayer = battleships.getCurrentGameState().getCurrentPlayer();
+            printGrid(battleships.getCurrentGameState().getPlayer(currentPlayer - 1).getGivenShots());
+            optionAfterEachMove();
+        }
+        if (choice.matches("3")) {
+            for (int i = 5; i > 0; i--) {
+                ui.println("Your turn will end for " + i + " seconds. Move away from monitor.");
+                Thread.sleep(1000);
+            }
+
         }
     }
 
