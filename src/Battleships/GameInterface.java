@@ -1,5 +1,7 @@
 package Battleships;
 
+import javax.swing.*;
+
 public class GameInterface {
 
     private static final int DEFAULT_NUMBER_OF_PLAYERS = 2;
@@ -105,12 +107,12 @@ public class GameInterface {
     private void shoot(PlayerMovement playerMovement, int player){
         int attacker = 0;
         int defender = 0;
-        if(player == 2){
-            attacker = 2;
-            defender = 1;
-        } else {
+        if(player == 1){
             attacker = 1;
-            defender = 2;
+            defender = 0;
+        } else {
+            attacker = 0;
+            defender = 1;
         }
 
         char[][] gridUnderTheFire = battleships.getCurrentGameState().getPlayer(defender).getGameGrid();
@@ -127,6 +129,7 @@ public class GameInterface {
             attackerMarkingGrid[y][x] = '-';
             ui.println("You have missed.");
         }
+
     }
 
     private void printGrid(char[][] gridToPrint) {

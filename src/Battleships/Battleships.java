@@ -52,24 +52,27 @@ public class Battleships {
             this.currentPlayer = currentPlayer;
         }
 
-        public void setWinner(int player){
+        public void setWinner(int player) {
             winner = player;
         }
 
 
-        public boolean hasWinner(Battleships battleships){
+        public boolean hasWinner(Battleships battleships) {
+            int shipsleft = 0;
             for (int i = 0; i < 2; i++) {
                 char[][] grid = battleships.getCurrentGameState().getPlayer(i).getGameGrid();
                 for (int j = 0; j < grid.length; j++) {
                     for (int k = 0; k < grid.length; k++) {
-                        if(grid[i][j] == '█'){
-                            return false;
+                        if (grid[i][j] == '█') {
+                            shipsleft++;
                         }
                     }
                 }
-                setWinner(i + 1);
-                System.out.println("Player number " + winner + " is the winner!" );
-                return true;
+                if (shipsleft == 0) {
+                    setWinner(i + 1);
+                    System.out.println("Player number " + winner + " is the winner!");
+                    return true;
+                }
             }
             return false;
         }
