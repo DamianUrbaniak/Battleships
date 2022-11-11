@@ -1,7 +1,5 @@
 package Battleships;
 
-import javax.swing.*;
-
 public class GameInterface {
 
     private static final int DEFAULT_NUMBER_OF_PLAYERS = 2;
@@ -48,10 +46,10 @@ public class GameInterface {
             ui.println("Player's number " + battleships.getCurrentGameState().getCurrentPlayer() + " turn.");
             ui.println("Enter the coordinates to take a shot: ");
             PlayerMovement playerMovement = readPlayerMovementUntilNoException();
-            while (isIllegalShoot(playerMovement)) {
+            while (isIllegalShot(playerMovement)) {
                 playerMovement = readPlayerMovementUntilNoException();
             }
-            shoot(playerMovement, battleships.getCurrentGameState().getCurrentPlayer());
+            fire(playerMovement, battleships.getCurrentGameState().getCurrentPlayer());
             optionAfterEachMove();
             playersSwitcher(battleships.getCurrentGameState().getCurrentPlayer());
         }
@@ -105,7 +103,7 @@ public class GameInterface {
         }
     }
 
-    private void shoot(PlayerMovement playerMovement, int player) {
+    private void fire(PlayerMovement playerMovement, int player) {
         int attacker = 0;
         int defender = 0;
         if (player == 1) {
@@ -167,11 +165,11 @@ public class GameInterface {
     }
 
 
-    private boolean isIllegalShoot(PlayerMovement playerMovement) {
+    private boolean isIllegalShot(PlayerMovement playerMovement) {
 //        start here, implement code that will switch players grids between each other
         int currentPlaya = battleships.getCurrentGameState().getCurrentPlayer();
         try {
-            rulesChecker.isValidShoot(battleships, playerMovement, currentPlaya);
+            rulesChecker.isValidShot(battleships, playerMovement, currentPlaya);
 
         } catch (IllegalArgumentException e) {
             ui.print(e.getMessage() + ", type in your move again. \n");

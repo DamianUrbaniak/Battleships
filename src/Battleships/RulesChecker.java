@@ -25,7 +25,7 @@ public class RulesChecker {
         return valuated;
     }
 
-    public boolean isValidShoot(Battleships battleships, PlayerMovement playerMovement, int player) {
+    public boolean isValidShot(Battleships battleships, PlayerMovement playerMovement, int player) {
         boolean valuated = false;
         int givenXCoordinate = playerMovement.getX();
         int givenYCoordinate = playerMovement.getY();
