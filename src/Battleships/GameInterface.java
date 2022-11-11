@@ -125,7 +125,7 @@ public class GameInterface {
             attackerMarkingGrid[y][x] = 'X';
             gridUnderTheFire[y][x] = 'X';
             ui.println("BOOOM!!! You have hit the target! ");
-        } else if (gridUnderTheFire[y][x] == '░') {
+        } else{
             attackerMarkingGrid[y][x] = '-';
             ui.println("You have missed.");
         }

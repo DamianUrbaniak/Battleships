@@ -60,18 +60,18 @@ public class Battleships {
         public boolean hasWinner(Battleships battleships) {
             for (int i = 0; i < 2; i++) {
                 int shipsleft = 5;
-                char[][] grid = battleships.getCurrentGameState().getPlayer(i).getGameGrid();
+                char[][] grid = battleships.getCurrentGameState().getPlayer(i).getGivenShots();
                 for (int j = 0; j < grid.length; j++) {
                     for (int k = 0; k < grid.length; k++) {
-                        if (grid[i][j] == '█') {
+                        if (grid[j][k] == 'X') {
                             shipsleft--;
                         }
                     }
-                }
-                if (shipsleft == 0) {
-                    setWinner(i + 1);
-                    System.out.println("Player number " + winner + " is the winner!");
-                    return true;
+                    if (shipsleft == 0) {
+                        setWinner(i + 1);
+                        System.out.println("Player number " + winner + " is the winner!");
+                        return true;
+                    }
                 }
             }
             return false;
