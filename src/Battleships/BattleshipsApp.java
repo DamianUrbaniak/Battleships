@@ -3,7 +3,7 @@ package Battleships;
 import java.util.Scanner;
 
 public class BattleshipsApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         RulesChecker rulesChecker = new RulesChecker();
         Battleships battleships = new Battleships();

@@ -30,6 +30,8 @@ public class Battleships {
 
         private int currentPlayer;
 
+        private int winner = 0;
+
         List<Player> players = new ArrayList<>();
 
         public GameState(Player player, Player player2) {
@@ -42,12 +44,37 @@ public class Battleships {
             return currentPlayer;
         }
 
+        public Player getPlayer(int index) {
+            return players.get(index);
+        }
+
         public void setCurrentPlayer(int currentPlayer) {
             this.currentPlayer = currentPlayer;
         }
 
-        public Player getPlayer(int index) {
-            return players.get(index);
+        public void setWinner(int player) {
+            winner = player;
+        }
+
+
+        public boolean hasWinner(Battleships battleships) {
+            for (int i = 0; i < 2; i++) {
+                int shipsleft = 5;
+                char[][] grid = battleships.getCurrentGameState().getPlayer(i).getGivenShots();
+                for (int j = 0; j < grid.length; j++) {
+                    for (int k = 0; k < grid.length; k++) {
+                        if (grid[j][k] == 'X') {
+                            shipsleft--;
+                        }
+                    }
+                    if (shipsleft == 0) {
+                        setWinner(i + 1);
+                        System.out.println("Player number " + winner + " is the winner!");
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
     }
