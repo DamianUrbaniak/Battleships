@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="dba65373-b967-46c3-9728-ab631263046c" name="Changes" comment="" />
+    <list default="true" id="dba65373-b967-46c3-9728-ab631263046c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Battleships.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Battleships.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Battleships/Battleships.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Battleships/Battleships.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Battleships/BattleshipsApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Battleships/BattleshipsApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Battleships/CoordinationParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Battleships/CoordinationParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Battleships/GameInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Battleships/GameInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Battleships/PlayerMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Battleships/PlayerMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Battleships/RulesChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Battleships/RulesChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Battleships/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Battleships/UserInterface.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

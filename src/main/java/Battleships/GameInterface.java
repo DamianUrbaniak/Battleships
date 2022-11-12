@@ -42,7 +42,7 @@ public class GameInterface {
 
         int roundsCounter = 0;
 
-        while (!battleships.getCurrentGameState().hasWinner(battleships)) {
+        while (!battleships.getCurrentGameState().hasWinner()) {
             ui.println("Player's number " + battleships.getCurrentGameState().getCurrentPlayer() + " turn.");
             ui.println("Enter the coordinates to take a shot: ");
             PlayerMovement playerMovement = readPlayerMovementUntilNoException();
@@ -123,7 +123,7 @@ public class GameInterface {
             attackerMarkingGrid[y][x] = 'X';
             gridUnderTheFire[y][x] = 'X';
             ui.println("BOOOM!!! You have hit the target! ");
-        } else{
+        } else {
             attackerMarkingGrid[y][x] = '-';
             ui.println("You have missed.");
         }
@@ -132,11 +132,8 @@ public class GameInterface {
 
     private void printGrid(char[][] gridToPrint) {
         char[][] grid = gridToPrint;
+        ui.print(" ");
         for (int i = 0; i < grid.length; i++) {
-            if (i == 5) {
-                ui.print(i + " ");
-                continue;
-            }
             ui.print(i);
         }
         ui.print("\n");

@@ -43,9 +43,7 @@ public class RulesChecker {
                     "Shoot with that coordinates was already given"
             );
         }
-        if (gridToCompare[givenYCoordinate][givenXCoordinate] == '░'
-//                || gridToCompare[givenYCoordinate][givenXCoordinate] == '█'
-        ) {
+        if (gridToCompare[givenYCoordinate][givenXCoordinate] == '░') {
             valuated = true;
         }
         return valuated;

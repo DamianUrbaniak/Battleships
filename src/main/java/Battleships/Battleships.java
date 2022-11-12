@@ -1,7 +1,6 @@
 package Battleships;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Battleships {
@@ -56,11 +55,10 @@ public class Battleships {
             winner = player;
         }
 
-
-        public boolean hasWinner(Battleships battleships) {
+        public boolean hasWinner() {
             for (int i = 0; i < 2; i++) {
                 int shipsleft = 5;
-                char[][] grid = battleships.getCurrentGameState().getPlayer(i).getGivenShots();
+                char[][] grid = getPlayer(i).getGivenShots();
                 for (int j = 0; j < grid.length; j++) {
                     for (int k = 0; k < grid.length; k++) {
                         if (grid[j][k] == 'X') {
@@ -76,7 +74,6 @@ public class Battleships {
             }
             return false;
         }
-
     }
 
     public static class Player {
