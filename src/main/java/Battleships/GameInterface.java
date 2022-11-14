@@ -23,26 +23,29 @@ public class GameInterface {
     }
 
 
-    public void startGame() throws InterruptedException {
+    public void startGame() {
         emptygrid(battleships.getCurrentGameState().getPlayerByID(1).getGameGrid());
         emptygrid(battleships.getCurrentGameState().getPlayerByID(2).getGameGrid());
 
         ui.println("Battleships game.");
         ui.println("Number of players is set to " + DEFAULT_NUMBER_OF_PLAYERS);
 
-        ui.println("Player number " + battleships.getCurrentGameState().getCurrentPlayer());
+        ui.println("Player number " + battleships.getCurrentGameState()
+                .getCurrentPlayer().getIdPlayer());
         ui.println("Please set your ships on the grid.");
         putShipsOnAGrid();
         playersSwitcher();
 
-        ui.println("Player number " + battleships.getCurrentGameState().getCurrentPlayer());
+        ui.println("Player number " + battleships.getCurrentGameState()
+                .getCurrentPlayer().getIdPlayer());
         ui.println("Please set your ships on the grid.");
         putShipsOnAGrid();
         playersSwitcher();
 
 
         while (!battleships.getCurrentGameState().hasWinner()) {
-            ui.println("Player's number " + battleships.getCurrentGameState().getCurrentPlayer() + " turn.");
+            ui.println("Player's number " + battleships.getCurrentGameState()
+                    .getCurrentPlayer().getIdPlayer() + " turn.");
             ui.println("Enter the coordinates to take a shot: ");
             PlayerMovement playerMovement = readPlayerMovementUntilNoException();
             while (isIllegalShot(playerMovement)) {
@@ -171,15 +174,15 @@ public class GameInterface {
     }
 
     private void playersSwitcher() {
-        if (battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer() == 1) {
-            battleships.getCurrentGameState().setCurrentPlayer(2);
-        }
-        if (battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer() ==  2) {
+
+        if (battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer() == 2) {
             battleships.getCurrentGameState().setCurrentPlayer(1);
+        } else if (battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer() == 1) {
+            battleships.getCurrentGameState().setCurrentPlayer(2);
         }
     }
 
-    private void optionAfterEachMove(){
+    private void optionAfterEachMove() {
         ui.println("What would you like to do next?");
         ui.println("Display my ships. Press 1.");
         ui.println("Display my given shoots so far. Press 2.");
@@ -198,11 +201,13 @@ public class GameInterface {
         if (choice.matches("3")) {
             for (int i = 5; i > 0; i--) {
                 ui.println("Your turn will end for " + i + " seconds. Move away from monitor.");
-                Thread.sleep(1000);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException("Unexpected interrupt", e);
+                }
             }
-
         }
     }
-
 }
 

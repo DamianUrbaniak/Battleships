@@ -56,7 +56,7 @@ public class Battleships {
         }
 
         public boolean hasWinner() {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 1; i < 3; i++) {
                 int shipsleft = 5;
                 char[][] grid = getPlayerByID(i).getGivenShots();
                 for (int j = 0; j < grid.length; j++) {
@@ -67,7 +67,7 @@ public class Battleships {
                     }
                     if (shipsleft == 0) {
                         setWinner(getPlayerByID(i));
-                        System.out.println("Player number " + winner + " is the winner!");
+                        System.out.println("Player number " + winner.getIdPlayer() + " is the winner!");
                         return true;
                     }
                 }
