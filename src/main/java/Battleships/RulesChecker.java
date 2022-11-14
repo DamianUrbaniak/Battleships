@@ -2,12 +2,12 @@ package Battleships;
 
 public class RulesChecker {
 
-    public boolean isValidMove(Battleships battleships, PlayerMovement playerMovement, int player) {
+    public boolean isValidMove(Battleships battleships, PlayerMovement playerMovement) {
         boolean valuated = false;
         int givenXCoordinate = playerMovement.getX();
         int givenYCoordinate = playerMovement.getY();
-        int gridSize = battleships.getCurrentGameState().getPlayer(player - 1).getGameGrid().length;
-        char[][] gridToCompare = battleships.getCurrentGameState().getPlayer(player - 1).getGameGrid();
+        int gridSize = battleships.getCurrentGameState().getCurrentPlayer().getGameGrid().length;
+        char[][] gridToCompare = battleships.getCurrentGameState().getCurrentPlayer().getGameGrid();
 
         if (givenYCoordinate >= gridSize || givenXCoordinate >= gridSize) {
             throw new ArrayIndexOutOfBoundsException(
@@ -25,12 +25,12 @@ public class RulesChecker {
         return valuated;
     }
 
-    public boolean isValidShot(Battleships battleships, PlayerMovement playerMovement, int player) {
+    public boolean isValidShot(Battleships battleships, PlayerMovement playerMovement) {
         boolean valuated = false;
         int givenXCoordinate = playerMovement.getX();
         int givenYCoordinate = playerMovement.getY();
-        int gridSize = battleships.getCurrentGameState().getPlayer(player - 1).getGameGrid().length;
-        char[][] gridToCompare = battleships.getCurrentGameState().getPlayer(player - 1).getGivenShots();
+        int gridSize = battleships.getCurrentGameState().getCurrentPlayer().getGameGrid().length;
+        char[][] gridToCompare = battleships.getCurrentGameState().getCurrentPlayer().getGivenShots();
 
         if (givenYCoordinate >= gridSize || givenXCoordinate >= gridSize) {
             throw new ArrayIndexOutOfBoundsException(

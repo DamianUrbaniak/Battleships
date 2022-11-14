@@ -2,8 +2,8 @@ package Battleships;
 
 public class CoordinationParser {
 
-    public PlayerMovement parse(String input){
-        if (!input.matches("\\[?\\d+,\\d+]?")){
+    public PlayerMovement parse(String input) {
+        if (!input.matches("\\[?\\d+,\\d+]?")) {
             throw new IllegalArgumentException(
                     "Movement should be ine the format [x, y], brackets are optional, x and y have to be a integer. "
             );
