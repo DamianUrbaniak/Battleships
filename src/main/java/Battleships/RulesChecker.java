@@ -6,8 +6,8 @@ public class RulesChecker {
         boolean valuated = false;
         int givenXCoordinate = playerMovement.getX();
         int givenYCoordinate = playerMovement.getY();
-        int gridSize = battleships.getCurrentGameState().getPlayer(player - 1).getGameGrid().length;
-        char[][] gridToCompare = battleships.getCurrentGameState().getPlayer(player - 1).getGameGrid();
+        int gridSize = battleships.getCurrentGameState().getPlayerByID(player).getGameGrid().length;
+        char[][] gridToCompare = battleships.getCurrentGameState().getPlayerByID(player).getGameGrid();
 
         if (givenYCoordinate >= gridSize || givenXCoordinate >= gridSize) {
             throw new ArrayIndexOutOfBoundsException(
@@ -29,8 +29,8 @@ public class RulesChecker {
         boolean valuated = false;
         int givenXCoordinate = playerMovement.getX();
         int givenYCoordinate = playerMovement.getY();
-        int gridSize = battleships.getCurrentGameState().getPlayer(player - 1).getGameGrid().length;
-        char[][] gridToCompare = battleships.getCurrentGameState().getPlayer(player - 1).getGivenShots();
+        int gridSize = battleships.getCurrentGameState().getPlayerByID(player - 1).getGameGrid().length;
+        char[][] gridToCompare = battleships.getCurrentGameState().getPlayerByID(player - 1).getGivenShots();
 
         if (givenYCoordinate >= gridSize || givenXCoordinate >= gridSize) {
             throw new ArrayIndexOutOfBoundsException(

@@ -24,21 +24,21 @@ public class GameInterface {
 
 
     public void startGame() throws InterruptedException {
-        emptygrid(battleships.getCurrentGameState().getPlayer(0).getGameGrid());
-        emptygrid(battleships.getCurrentGameState().getPlayer(1).getGameGrid());
+        emptygrid(battleships.getCurrentGameState().getPlayerByID(1).getGameGrid());
+        emptygrid(battleships.getCurrentGameState().getPlayerByID(2).getGameGrid());
 
         ui.println("Battleships game.");
         ui.println("Number of players is set to " + DEFAULT_NUMBER_OF_PLAYERS);
 
         ui.println("Player number " + battleships.getCurrentGameState().getCurrentPlayer());
         ui.println("Please set your ships on the grid.");
-        putShipsOnAGrid(battleships.getCurrentGameState().getCurrentPlayer());
-        playersSwitcher(1);
+        putShipsOnAGrid();
+        playersSwitcher();
 
         ui.println("Player number " + battleships.getCurrentGameState().getCurrentPlayer());
         ui.println("Please set your ships on the grid.");
-        putShipsOnAGrid(battleships.getCurrentGameState().getCurrentPlayer());
-        playersSwitcher(2);
+        putShipsOnAGrid();
+        playersSwitcher();
 
         int roundsCounter = 0;
 
@@ -49,9 +49,9 @@ public class GameInterface {
             while (isIllegalShot(playerMovement)) {
                 playerMovement = readPlayerMovementUntilNoException();
             }
-            fire(playerMovement, battleships.getCurrentGameState().getCurrentPlayer());
+            fire(playerMovement);
             optionAfterEachMove();
-            playersSwitcher(battleships.getCurrentGameState().getCurrentPlayer());
+            playersSwitcher();
         }
     }
 
@@ -65,8 +65,8 @@ public class GameInterface {
         return gameGrid;
     }
 
-    private void setShips(PlayerMovement playerMovement, int player) {
-        char[][] playerGrid = battleships.getCurrentGameState().getPlayer(player - 1).getGameGrid();
+    private void setShips(PlayerMovement playerMovement) {
+        char[][] playerGrid = battleships.getCurrentGameState().getCurrentPlayer().getGameGrid();
         int x = playerMovement.getX();
         int y = playerMovement.getY();
 
@@ -89,33 +89,33 @@ public class GameInterface {
         }
     }
 
-    private void putShipsOnAGrid(int player) {
+    private void putShipsOnAGrid() {
         for (int i = 0; i < 5; i++) {
             ui.println("There is a map of your ships: ");
-            printGrid(battleships.getCurrentGameState().getPlayer(player - 1).getGameGrid());
+            printGrid(battleships.getCurrentGameState().getCurrentPlayer().getGameGrid());
             ui.println("Enter coordinates, you have " + (5 - i) + " places left.");
             PlayerMovement coordinates = readPlayerMovementUntilNoException();
             while (isIllegal(coordinates)) {
                 coordinates = readPlayerMovementUntilNoException();
                 isIllegal(coordinates);
             }
-            setShips(coordinates, player);
+            setShips(coordinates);
         }
     }
 
-    private void fire(PlayerMovement playerMovement, int player) {
+    private void fire(PlayerMovement playerMovement) {
         int attacker = 0;
         int defender = 0;
-        if (player == 1) {
-            attacker = 0;
-            defender = 1;
-        } else {
+        if (battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer() == 1) {
             attacker = 1;
-            defender = 0;
+            defender = 2;
+        } else {
+            attacker = 2;
+            defender = 1;
         }
 
-        char[][] gridUnderTheFire = battleships.getCurrentGameState().getPlayer(defender).getGameGrid();
-        char[][] attackerMarkingGrid = battleships.getCurrentGameState().getPlayer(attacker).getGivenShots();
+        char[][] gridUnderTheFire = battleships.getCurrentGameState().getPlayerByID(defender).getGameGrid();
+        char[][] attackerMarkingGrid = battleships.getCurrentGameState().getPlayerByID(attacker).getGivenShots();
         int x = playerMovement.getX();
         int y = playerMovement.getY();
 
@@ -147,7 +147,7 @@ public class GameInterface {
     }
 
     private boolean isIllegal(PlayerMovement playerMovement) {
-        int currentPlaya = battleships.getCurrentGameState().getCurrentPlayer();
+        int currentPlaya = battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer();
         try {
             rulesChecker.isValidMove(battleships, playerMovement, currentPlaya);
 
@@ -163,8 +163,7 @@ public class GameInterface {
 
 
     private boolean isIllegalShot(PlayerMovement playerMovement) {
-//        start here, implement code that will switch players grids between each other
-        int currentPlaya = battleships.getCurrentGameState().getCurrentPlayer();
+        int currentPlaya = battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer();
         try {
             rulesChecker.isValidShot(battleships, playerMovement, currentPlaya);
 
@@ -178,11 +177,11 @@ public class GameInterface {
         return false;
     }
 
-    private void playersSwitcher(int player) {
-        if (player == 1) {
+    private void playersSwitcher() {
+        if (battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer() == 1) {
             battleships.getCurrentGameState().setCurrentPlayer(2);
         }
-        if (player == 2) {
+        if (battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer() ==  2) {
             battleships.getCurrentGameState().setCurrentPlayer(1);
         }
     }
@@ -194,13 +193,13 @@ public class GameInterface {
         ui.println("End my turn. Press 3.");
         String choice = ui.nextLine();
         if (choice.matches("1")) {
-            int currentPlayer = battleships.getCurrentGameState().getCurrentPlayer();
-            printGrid(battleships.getCurrentGameState().getPlayer(currentPlayer - 1).getGameGrid());
+            int currentPlayer = battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer();
+            printGrid(battleships.getCurrentGameState().getPlayerByID(currentPlayer).getGameGrid());
             optionAfterEachMove();
         }
         if (choice.matches("2")) {
-            int currentPlayer = battleships.getCurrentGameState().getCurrentPlayer();
-            printGrid(battleships.getCurrentGameState().getPlayer(currentPlayer - 1).getGivenShots());
+            int currentPlayer = battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer();
+            printGrid(battleships.getCurrentGameState().getPlayerByID(currentPlayer).getGivenShots());
             optionAfterEachMove();
         }
         if (choice.matches("3")) {
