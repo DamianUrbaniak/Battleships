@@ -24,8 +24,6 @@ public class GameInterface {
 
 
     public void startGame() {
-        emptygrid(battleships.getCurrentGameState().getPlayerByID(1).getGameGrid());
-        emptygrid(battleships.getCurrentGameState().getPlayerByID(2).getGameGrid());
 
         ui.println("Battleships game.");
         ui.println("Number of players is set to " + DEFAULT_NUMBER_OF_PLAYERS);
@@ -33,12 +31,14 @@ public class GameInterface {
         ui.println("Player number " + battleships.getCurrentGameState()
                 .getCurrentPlayer().getIdPlayer());
         ui.println("Please set your ships on the grid.");
+        emptyGrid();
         putShipsOnAGrid();
         playersSwitcher();
 
         ui.println("Player number " + battleships.getCurrentGameState()
                 .getCurrentPlayer().getIdPlayer());
         ui.println("Please set your ships on the grid.");
+        emptyGrid();
         putShipsOnAGrid();
         playersSwitcher();
 
@@ -57,14 +57,15 @@ public class GameInterface {
         }
     }
 
-    private char[][] emptygrid(char[][] gameGrid) {
+    private char[][] emptyGrid() {
+        char[][] emptyGrid = battleships.getCurrentGameState().getCurrentPlayer().getGameGrid();
 
-        for (char[] line : gameGrid) {
-            for (char square : line) {
-                square = '░';
+        for (int i = 0; i < emptyGrid.length; i++) {
+            for (int j = 0; j < emptyGrid.length; j++) {
+                emptyGrid[i][j] = '░';
             }
         }
-        return gameGrid;
+        return emptyGrid;
     }
 
     private void setShips(PlayerMovement playerMovement) {
