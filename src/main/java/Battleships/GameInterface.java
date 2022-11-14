@@ -40,7 +40,6 @@ public class GameInterface {
         putShipsOnAGrid();
         playersSwitcher();
 
-        int roundsCounter = 0;
 
         while (!battleships.getCurrentGameState().hasWinner()) {
             ui.println("Player's number " + battleships.getCurrentGameState().getCurrentPlayer() + " turn.");
@@ -70,10 +69,6 @@ public class GameInterface {
         int x = playerMovement.getX();
         int y = playerMovement.getY();
 
-        while (playerGrid[y][x] == '█') {
-            ui.println("Given coordinates are already taken, choose some other ");
-            playerMovement = readPlayerMovementUntilNoException();
-        }
         if (playerGrid[y][x] != '█') {
             playerGrid[y][x] = '█';
         }
@@ -147,9 +142,8 @@ public class GameInterface {
     }
 
     private boolean isIllegal(PlayerMovement playerMovement) {
-        int currentPlaya = battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer();
         try {
-            rulesChecker.isValidMove(battleships, playerMovement, currentPlaya);
+            rulesChecker.isValidMove(battleships, playerMovement);
 
         } catch (IllegalArgumentException e) {
             ui.print(e.getMessage() + ", type in your move again. \n");
@@ -163,9 +157,8 @@ public class GameInterface {
 
 
     private boolean isIllegalShot(PlayerMovement playerMovement) {
-        int currentPlaya = battleships.getCurrentGameState().getCurrentPlayer().getIdPlayer();
         try {
-            rulesChecker.isValidShot(battleships, playerMovement, currentPlaya);
+            rulesChecker.isValidShot(battleships, playerMovement);
 
         } catch (IllegalArgumentException e) {
             ui.print(e.getMessage() + ", type in your move again. \n");
@@ -186,7 +179,7 @@ public class GameInterface {
         }
     }
 
-    private void optionAfterEachMove() throws InterruptedException {
+    private void optionAfterEachMove(){
         ui.println("What would you like to do next?");
         ui.println("Display my ships. Press 1.");
         ui.println("Display my given shoots so far. Press 2.");
